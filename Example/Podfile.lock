@@ -1,7 +1,18 @@
 PODS:
-  - DPTableView (0.1.0)
+  - DPTableView (0.1.0):
+    - DZNEmptyDataSet (~> 1.8.1)
+    - RxCocoa (= 3.3.1)
+    - RxDataSources (= 1.0.3)
+    - RxSwift (= 3.3.1)
+  - DZNEmptyDataSet (1.8.1)
   - Nimble (5.1.1)
   - Quick (1.0.0)
+  - RxCocoa (3.3.1):
+    - RxSwift (~> 3.3)
+  - RxDataSources (1.0.3):
+    - RxCocoa (~> 3.0)
+    - RxSwift (~> 3.0)
+  - RxSwift (3.3.1)
 
 DEPENDENCIES:
   - DPTableView (from `../`)
@@ -13,9 +24,13 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  DPTableView: dd2bc55ffa01587f46363ace6c24ec021e644530
+  DPTableView: 51dffe46c22dce0a63c98ff1e908dcdcf5fff9d1
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   Nimble: 415e3aa3267e7bc2c96b05fa814ddea7bb686a29
   Quick: 8024e4a47e6cc03a9d5245ef0948264fc6d27cff
+  RxCocoa: 7dcb7a1860fc9cd0e23dae67ab105fc2916670b6
+  RxDataSources: a021a0e944ba5f7991259829d973afdbfa719c0b
+  RxSwift: 8fc9f2de6275a9101d518444e00bf32f1a42caac
 
 PODFILE CHECKSUM: 4ac583274142b17cd95020915b99931f98ead98c
 

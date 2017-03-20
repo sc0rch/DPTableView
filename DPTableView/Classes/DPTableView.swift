@@ -8,7 +8,7 @@ import RxCocoa
 import DZNEmptyDataSet
 import RxDataSources
 
-protocol DPTableViewElementCellProtocol {
+public protocol DPTableViewElementCellProtocol {
     associatedtype ViewModel
     
     static var estimatedHeight: CGFloat { get }
@@ -16,7 +16,7 @@ protocol DPTableViewElementCellProtocol {
 }
 
 //MARK: -
-protocol DPSectionItemProtocol: SectionModelType {
+public protocol DPSectionItemProtocol: SectionModelType {
     associatedtype ViewModel
     
     var header: String { get }
@@ -24,7 +24,7 @@ protocol DPSectionItemProtocol: SectionModelType {
 }
 
 //MARK: -
-class DPSectionHeader: UITableViewHeaderFooterView {
+open class DPSectionHeader: UITableViewHeaderFooterView {
     @IBOutlet private weak var titleLabel: UILabel!
     
     func set(title: String?) {
@@ -33,23 +33,23 @@ class DPSectionHeader: UITableViewHeaderFooterView {
 }
 
 //MARK: -
-class DPTableView: UITableView {
+open class DPTableView: UITableView {
     private var disposeBag = DisposeBag()
     
     ///CellType saved from setup method
-    var cellType: AnyClass?
+    open var cellType: AnyClass?
     
     ///HeaderType saved from setup method
-    var headerType: DPSectionHeader.Type?
+    open var headerType: DPSectionHeader.Type?
     
     ///Text, that showed when row count == 0
-    var noItemsText: String = ""
+    open var noItemsText: String = ""
     
     ///If true then when selected cell will be auto deselected
-    var isAutoDeselect: Bool = true
+    open var isAutoDeselect: Bool = true
     
     //MARK: Initialization
-    override func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         setupTableView()
     }
@@ -64,7 +64,7 @@ class DPTableView: UITableView {
     
     //MARK: Sizing
     ///Compress and correct sizing header of tableView
-    func sizeHeaderToFit() {
+    open func sizeHeaderToFit() {
         DispatchQueue.main.async {
             if let headerView = self.tableHeaderView {
                 headerView.setNeedsLayout()
@@ -101,7 +101,7 @@ class DPTableView: UITableView {
      - parameter isLoadFromNib: If **true**, view for cell will be loaded from *xib*, that named same as cell type. See: `UIView.nib`.
      - parameter customCellSetup: Custom configuration block, called for each cell on reload data for cell.
      */
-    func setup<CellType: UITableViewCell, ViewModel>(cellType: CellType.Type,
+    open func setup<CellType: UITableViewCell, ViewModel>(cellType: CellType.Type,
                viewModels: Observable<[ViewModel]>,
                isLoadFromNib: Bool = false,
                customCellSetup: ((CellType, Int) -> Void)? = nil)
@@ -130,7 +130,7 @@ class DPTableView: UITableView {
      - parameter headerType: If not nil, view loaded from xib with that type will be used for section header.
      - parameter customCellSetup: Custom configuration block, called for each cell on reload data for cell.
      */
-    func setup<CellType: UITableViewCell, SectionItem:DPSectionItemProtocol, HeaderType:DPSectionHeader>(cellType: CellType.Type,
+    open func setup<CellType: UITableViewCell, SectionItem:DPSectionItemProtocol, HeaderType:DPSectionHeader>(cellType: CellType.Type,
                                                                                                          items: Observable<[SectionItem]>,
                                                                                                          isLoadFromNib: Bool = false,
                                                                                                          headerType: HeaderType.Type? = nil,
@@ -172,7 +172,7 @@ class DPTableView: UITableView {
 
 //MARK: - UITableViewDelegate
 extension DPTableView: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let title = dataSource?.tableView?(self, titleForHeaderInSection: section)
         if let _ = title {
             return UITableViewAutomaticDimension
@@ -180,7 +180,7 @@ extension DPTableView: UITableViewDelegate {
         return 0
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if let headerType = headerType, let dataSource = dataSource {
             let header = dequeueReusableHeaderFooterView(withIdentifier: headerType.describing) as? DPSectionHeader
             let title = dataSource.tableView?(self, titleForHeaderInSection: section)
@@ -190,7 +190,7 @@ extension DPTableView: UITableViewDelegate {
         return nil
     }
     
-    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+    open func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
         let title = dataSource?.tableView?(self, titleForHeaderInSection: section)
         if let _ = title {
             return 40
@@ -198,7 +198,7 @@ extension DPTableView: UITableViewDelegate {
         return 0
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if isAutoDeselect {
             tableView.deselectRow(at: indexPath, animated: true)
         }
@@ -208,7 +208,7 @@ extension DPTableView: UITableViewDelegate {
 //MARK: - DZNEmptyDataSet
 extension DPTableView: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     
-    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+    open func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         let attributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 14)]
         return NSAttributedString(string: noItemsText, attributes: attributes)
     }

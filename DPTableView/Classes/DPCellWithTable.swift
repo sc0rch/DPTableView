@@ -9,10 +9,10 @@ import DZNEmptyDataSet
 
 private let kHeightScrollFix: CGFloat = 20
 
-class DPCellWithTable: UITableViewCell {
+open class DPCellWithTable: UITableViewCell {
     @IBOutlet private weak var tableView: DPTableView!
     
-    var cellType: AnyClass? {
+    open var cellType: AnyClass? {
         get {
             return tableView.cellType
         }
@@ -21,7 +21,7 @@ class DPCellWithTable: UITableViewCell {
         }
     }
     
-    var noItemsText: String {
+    open var noItemsText: String {
         get {
             return tableView.noItemsText
         }
@@ -30,7 +30,7 @@ class DPCellWithTable: UITableViewCell {
         }
     }
     
-    var contentHeight: CGFloat {
+    open var contentHeight: CGFloat {
         let height = tableView.contentSize.height
         if height > 0 {
             return height + kHeightScrollFix
@@ -40,12 +40,12 @@ class DPCellWithTable: UITableViewCell {
     }
     
     //MARK: - SBTableMethods
-    func setupTable<CellType: UITableViewCell, ViewModel>(cellType: CellType.Type, viewModels: Observable<[ViewModel]>, isLoadFromNib: Bool = false)
+    open func setupTable<CellType: UITableViewCell, ViewModel>(cellType: CellType.Type, viewModels: Observable<[ViewModel]>, isLoadFromNib: Bool = false)
         where CellType: DPTableViewElementCellProtocol, CellType.ViewModel == ViewModel {
             tableView.setup(cellType: cellType, viewModels: viewModels, isLoadFromNib: isLoadFromNib)
     }
     
-    func getModelSelectedObservable<ViewModel>(viewModel: ViewModel.Type) -> ControlEvent<ViewModel> {
+    open func getModelSelectedObservable<ViewModel>(viewModel: ViewModel.Type) -> ControlEvent<ViewModel> {
         return tableView.rx.modelSelected(viewModel)
     }
 }
