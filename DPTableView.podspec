@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'DPTableView'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of DPTableView.'
+  s.summary          = 'UITableView + RxSwift + DZNEmpyDataSet'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -22,21 +22,18 @@ TODO: Add long description of the pod here.
                        DESC
 
   s.homepage         = 'https://github.com/ximximik/DPTableView'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'ximximik' => 'pestov.d@kkoi.ru' }
+  s.author           = { 'ximximik' => 'ximximik@yandex.ru' }
   s.source           = { :git => 'https://github.com/ximximik/DPTableView.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'DPTableView/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'DPTableView' => ['DPTableView/Assets/*.png']
-  # }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.frameworks = 'UIKit'
+  s.dependency 'RxSwift', '3.3.1'
+  s.dependency 'RxCocoa', '3.3.1'
+  s.dependency 'DZNEmptyDataSet', '~> 1.8.1'
+  s.dependency 'RxDataSources', '1.0.3'
 end
