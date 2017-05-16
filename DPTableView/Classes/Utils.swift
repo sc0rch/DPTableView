@@ -1,9 +1,6 @@
 //
-//  Utils.swift
-//  Pods
-//
-//  Created by i20 on 20.03.17.
-//
+// Created by Danil Pestov on 20.03.17.
+// Copyright (c) 2016 HOKMT. All rights reserved.
 //
 
 import UIKit

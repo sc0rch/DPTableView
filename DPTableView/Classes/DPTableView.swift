@@ -1,6 +1,6 @@
 //
-// Created by i20 on 06.12.16.
-// Copyright (c) 2016 i20. All rights reserved.
+// Created by Danil Pestov on 06.12.16.
+// Copyright (c) 2016 HOKMT. All rights reserved.
 //
 
 import RxSwift
