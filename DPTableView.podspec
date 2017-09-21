@@ -31,8 +31,8 @@ TODO: Add long description of the pod here.
   s.source_files = 'DPTableView/Classes/**/*'
 
   s.frameworks = 'UIKit'
-  s.dependency 'RxSwift', '~> 3.3'
-  s.dependency 'RxCocoa', '~> 3.3'
+  s.dependency 'RxSwift', '4.0.0-beta.0'
+  s.dependency 'RxCocoa', '4.0.0-beta.0'
   s.dependency 'DZNEmptyDataSet', '~> 1.8.1'
-  s.dependency 'RxDataSources', '1.0.3'
+  s.dependency 'RxDataSources', '2.0.2'
 end
