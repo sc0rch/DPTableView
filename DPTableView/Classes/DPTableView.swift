@@ -209,7 +209,7 @@ extension DPTableView: UITableViewDelegate {
 extension DPTableView: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     
     open func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        let attributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 14)]
+        let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)]
         return NSAttributedString(string: noItemsText, attributes: attributes)
     }
 }
