@@ -145,10 +145,8 @@ open class DPTableView: UITableView {
                 register(headerType.nib, forHeaderFooterViewReuseIdentifier: headerType.describing)
             }
             
-            let dataSource = RxTableViewSectionedReloadDataSource<SectionItem>()
-            
             //Cell configurations
-            dataSource.configureCell = { dataSource, tableView, indexPath, item in
+            let dataSource = RxTableViewSectionedReloadDataSource<SectionItem>(configureCell: { dataSource, tableView, indexPath, item in
                 let cell = tableView.dequeueReusableCell(withIdentifier:cellType.describing, for: indexPath)
                 
                 if let cell = cell as? CellType, let item = item as? CellType.ViewModel{
@@ -158,7 +156,7 @@ open class DPTableView: UITableView {
                     }
                 }
                 return cell
-            }
+            })
             
             //Section titles
             dataSource.titleForHeaderInSection = { dateSource, section in
