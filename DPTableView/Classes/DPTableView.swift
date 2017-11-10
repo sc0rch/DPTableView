@@ -16,23 +16,6 @@ public protocol DPTableViewElementCellProtocol {
 }
 
 //MARK: -
-public protocol DPSectionItemProtocol: SectionModelType {
-    associatedtype ViewModel
-    
-    var header: String { get }
-    var items: [ViewModel] { get }
-}
-
-//MARK: -
-open class DPSectionHeader: UITableViewHeaderFooterView {
-    @IBOutlet private weak var titleLabel: UILabel!
-    
-    func set(title: String?) {
-        titleLabel.text = title
-    }
-}
-
-//MARK: -
 open class DPTableView: UITableView {
     private var disposeBag = DisposeBag()
     
@@ -102,9 +85,9 @@ open class DPTableView: UITableView {
      - parameter customCellSetup: Custom configuration block, called for each cell on reload data for cell.
      */
     open func setup<CellType: UITableViewCell, ViewModel>(cellType: CellType.Type,
-               viewModels: Observable<[ViewModel]>,
-               isLoadFromNib: Bool = false,
-               customCellSetup: ((CellType, Int) -> Void)? = nil)
+                                                          viewModels: Observable<[ViewModel]>,
+                                                          isLoadFromNib: Bool = false,
+                                                          customCellSetup: ((CellType, IndexPath) -> Void)? = nil)
         where CellType: DPTableViewElementCellProtocol, CellType.ViewModel == ViewModel {
             
             basicSetup(cellType: cellType, isLoadFromNib: isLoadFromNib)
@@ -115,7 +98,7 @@ open class DPTableView: UITableView {
                 { row, viewModel, cell in
                     cell.set(viewModel: viewModel)
                     if let customCellSetup = customCellSetup {
-                        customCellSetup(cell, row)
+                        customCellSetup(cell, IndexPath(row: row, section: 0))
                     }
                 }
                 .addDisposableTo(disposeBag)
@@ -130,12 +113,14 @@ open class DPTableView: UITableView {
      - parameter headerType: If not nil, view loaded from xib with that type will be used for section header.
      - parameter customCellSetup: Custom configuration block, called for each cell on reload data for cell.
      */
+    @discardableResult
     open func setup<CellType: UITableViewCell, SectionItem:DPSectionItemProtocol, HeaderType:DPSectionHeader>(cellType: CellType.Type,
-                                                                                                         items: Observable<[SectionItem]>,
-                                                                                                         isLoadFromNib: Bool = false,
-                                                                                                         headerType: HeaderType.Type? = nil,
-                                                                                                         customCellSetup: ((CellType) -> Void)? = nil)
-        where CellType: DPTableViewElementCellProtocol, CellType.ViewModel == SectionItem.ViewModel {
+                                                                                                              items: Observable<[SectionItem]>,
+                                                                                                              isLoadFromNib: Bool = false,
+                                                                                                              headerType: HeaderType.Type? = nil,
+                                                                                                              dataSourceSetup: ((RxTableViewSectionedAnimatedDataSource<SectionItem>) -> ())? = nil,
+                                                                                                              customCellSetup: ((CellType, IndexPath) -> Void)? = nil)
+        where CellType: DPTableViewElementCellProtocol, CellType.ViewModel == SectionItem.Item, SectionItem: AnimatableSectionModelType {
             
             basicSetup(cellType: cellType, isLoadFromNib: isLoadFromNib)
             
@@ -146,25 +131,38 @@ open class DPTableView: UITableView {
             }
             
             //Cell configurations
-            let dataSource = RxTableViewSectionedReloadDataSource<SectionItem>(configureCell: { dataSource, tableView, indexPath, item in
+            let dataSource = RxTableViewSectionedAnimatedDataSource<SectionItem>(configureCell:  { dataSource, tableView, indexPath, item in
                 let cell = tableView.dequeueReusableCell(withIdentifier:cellType.describing, for: indexPath)
                 
-                if let cell = cell as? CellType, let item = item as? CellType.ViewModel{
+                if let cell = cell as? CellType, let item = item as? CellType.ViewModel {
                     cell.set(viewModel: item)
                     if let customCellSetup = customCellSetup {
-                        customCellSetup(cell)
+                        customCellSetup(cell, indexPath)
                     }
                 }
                 return cell
             })
-            
             //Section titles
             dataSource.titleForHeaderInSection = { dateSource, section in
                 return dataSource[section].header
             }
             
-            items.bindTo(self.rx.items(dataSource: dataSource))
+            dataSourceSetup?(dataSource)
+            
+            items
+                .bindTo(self.rx.items(dataSource: dataSource))
                 .addDisposableTo(disposeBag)
+    }
+    
+    @discardableResult
+    open func setupWithDiff<CellType: UITableViewCell, ViewModel>(cellType: CellType.Type,
+                                                                  viewModels: Observable<[ViewModel]>,
+                                                                  isLoadFromNib: Bool = false,
+                                                                  dataSourceSetup: ((RxTableViewSectionedAnimatedDataSource<DPSectionModel<Int, ViewModel>>) -> ())? = nil,
+                                                                  customCellSetup: ((CellType, IndexPath) -> Void)? = nil)
+        where CellType: DPTableViewElementCellProtocol, CellType.ViewModel == ViewModel, ViewModel: Equatable & IdentifiableType {
+            let items = viewModels.map { [DPSectionModel(identity: 0, header: nil, items: $0)] }
+            setup(cellType: cellType, items: items, isLoadFromNib: isLoadFromNib, headerType: nil, dataSourceSetup: dataSourceSetup, customCellSetup: customCellSetup)
     }
 }
 
@@ -211,3 +209,4 @@ extension DPTableView: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
         return NSAttributedString(string: noItemsText, attributes: attributes)
     }
 }
+
