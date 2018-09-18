@@ -1,7 +1,6 @@
 use_frameworks!
 
 target 'DPTableView_Example' do
-  pod 'DPTableView', :path => '../'
 
   target 'DPTableView_Tests' do
     inherit! :search_paths

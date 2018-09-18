@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DPTableView'
-  s.version          = '0.2.0'
+  s.version          = '0.2.1'
   s.summary          = 'UITableView + RxSwift + DZNEmpyDataSet'
 
 # This description is used to generate tags and improve search results.
@@ -31,8 +31,8 @@ TODO: Add long description of the pod here.
   s.source_files = 'DPTableView/Classes/**/*'
 
   s.frameworks = 'UIKit'
-  s.dependency 'RxSwift', '4.0.0'
-  s.dependency 'RxCocoa', '4.0.0'
+  s.dependency 'RxSwift', '4.3.0'
+  s.dependency 'RxCocoa', '4.3.0'
   s.dependency 'DZNEmptyDataSet', '~> 1.8.1'
-  s.dependency 'RxDataSources', '3.0.1'
+  s.dependency 'RxDataSources', '3.1.0'
 end
