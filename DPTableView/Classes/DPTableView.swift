@@ -40,7 +40,7 @@ open class DPTableView: UITableView {
     private func setupTableView() {
         self.emptyDataSetSource = self
         self.emptyDataSetDelegate = self
-        self.rowHeight = UITableViewAutomaticDimension
+        self.rowHeight = UITableView.automaticDimension
         self.tableFooterView = UIView()
         self.delegate = self
     }
@@ -52,7 +52,7 @@ open class DPTableView: UITableView {
             if let headerView = self.tableHeaderView {
                 headerView.setNeedsLayout()
                 headerView.layoutIfNeeded()
-                let height = headerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+                let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
                 var frame = headerView.frame
                 frame.size.height = height
                 headerView.frame = frame
@@ -94,14 +94,14 @@ open class DPTableView: UITableView {
             
             //Cell configuration
             viewModels
-                .bindTo(self.rx.items(cellIdentifier: cellType.describing, cellType: cellType))
+                .bind(to: self.rx.items(cellIdentifier: cellType.describing, cellType: cellType))
                 { row, viewModel, cell in
                     cell.set(viewModel: viewModel)
                     if let customCellSetup = customCellSetup {
                         customCellSetup(cell, IndexPath(row: row, section: 0))
                     }
                 }
-                .addDisposableTo(disposeBag)
+                .disposed(by: disposeBag)
     }
     
     
@@ -113,7 +113,7 @@ open class DPTableView: UITableView {
      - parameter headerType: If not nil, view loaded from xib with that type will be used for section header.
      - parameter customCellSetup: Custom configuration block, called for each cell on reload data for cell.
      */
-    @discardableResult
+    
     open func setup<CellType: UITableViewCell, SectionItem:DPSectionItemProtocol, HeaderType:DPSectionHeader>(cellType: CellType.Type,
                                                                                                               items: Observable<[SectionItem]>,
                                                                                                               isLoadFromNib: Bool = false,
@@ -134,7 +134,7 @@ open class DPTableView: UITableView {
             let dataSource = RxTableViewSectionedAnimatedDataSource<SectionItem>(configureCell:  { dataSource, tableView, indexPath, item in
                 let cell = tableView.dequeueReusableCell(withIdentifier:cellType.describing, for: indexPath)
                 
-                if let cell = cell as? CellType, let item = item as? CellType.ViewModel {
+                if let cell = cell as? CellType {
                     cell.set(viewModel: item)
                     if let customCellSetup = customCellSetup {
                         customCellSetup(cell, indexPath)
@@ -150,11 +150,11 @@ open class DPTableView: UITableView {
             dataSourceSetup?(dataSource)
             
             items
-                .bindTo(self.rx.items(dataSource: dataSource))
-                .addDisposableTo(disposeBag)
+                .bind(to: self.rx.items(dataSource: dataSource))
+                .disposed(by: disposeBag)
     }
     
-    @discardableResult
+    
     open func setupWithDiff<CellType: UITableViewCell, ViewModel>(cellType: CellType.Type,
                                                                   viewModels: Observable<[ViewModel]>,
                                                                   isLoadFromNib: Bool = false,
@@ -171,7 +171,7 @@ extension DPTableView: UITableViewDelegate {
     open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let title = dataSource?.tableView?(self, titleForHeaderInSection: section)
         if let _ = title {
-            return UITableViewAutomaticDimension
+            return UITableView.automaticDimension
         }
         return 0
     }
@@ -205,7 +205,7 @@ extension DPTableView: UITableViewDelegate {
 extension DPTableView: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     
     open func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)]
+        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]
         return NSAttributedString(string: noItemsText, attributes: attributes)
     }
 }

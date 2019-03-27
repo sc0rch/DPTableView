@@ -1,11 +1,9 @@
 use_frameworks!
 
 target 'DPTableView_Example' do
-
+  pod 'DPTableView', :path => '../'
   target 'DPTableView_Tests' do
     inherit! :search_paths
 
-    pod 'Quick', '~> 1.0.0'
-  pod 'Nimble', '~> 5.1.1'
   end
 end
