@@ -1,18 +1,21 @@
 PODS:
-  - Differentiator (3.1.0)
-  - DPTableView (0.2.1):
+  - Differentiator (4.0.1)
+  - DPTableView (0.4.0):
     - DZNEmptyDataSet (~> 1.8.1)
-    - RxCocoa (= 4.3.0)
-    - RxDataSources (= 3.1.0)
-    - RxSwift (= 4.3.0)
+    - RxCocoa (= 5.0)
+    - RxDataSources (= 4.0.1)
+    - RxSwift (= 5.0)
   - DZNEmptyDataSet (1.8.1)
-  - RxCocoa (4.3.0):
-    - RxSwift (~> 4.0)
-  - RxDataSources (3.1.0):
-    - Differentiator (~> 3.0)
-    - RxCocoa (~> 4.0)
-    - RxSwift (~> 4.0)
-  - RxSwift (4.3.0)
+  - RxCocoa (5.0.0):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxDataSources (4.0.1):
+    - Differentiator (~> 4.0)
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
+  - RxRelay (5.0.0):
+    - RxSwift (~> 5)
+  - RxSwift (5.0.0)
 
 DEPENDENCIES:
   - DPTableView (from `../`)
@@ -23,6 +26,7 @@ SPEC REPOS:
     - DZNEmptyDataSet
     - RxCocoa
     - RxDataSources
+    - RxRelay
     - RxSwift
 
 EXTERNAL SOURCES:
@@ -30,13 +34,14 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
-  DPTableView: 3789654bf271301057bf7310af14942474e2fc77
+  Differentiator: 886080237d9f87f322641dedbc5be257061b0602
+  DPTableView: 83b7849302900d10f6113e77622ebd6cc04c63af
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
-  RxCocoa: 71b9cce833fbcb89a8eec11816dd225830c2bd3c
-  RxDataSources: a843bad90c29817f5923ec8163f4af2de084ceb3
-  RxSwift: a9717a34df3179fe63563f76e046ad345078dd3a
+  RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
+  RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
+  RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
+  RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
 
-PODFILE CHECKSUM: 87b2e98ede66195fbe373e68e55cf75c65e25438
+PODFILE CHECKSUM: 8e66383a8b7b09b0cff97be27de788a7502bb411
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.7.3

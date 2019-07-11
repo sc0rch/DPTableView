@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DPTableView'
-  s.version          = '0.3.0'
+  s.version          = '0.4.0'
   s.summary          = 'UITableView + RxSwift + DZNEmpyDataSet'
 
 # This description is used to generate tags and improve search results.
@@ -26,13 +26,13 @@ TODO: Add long description of the pod here.
   s.author           = { 'ximximik' => 'ximximik@yandex.ru' }
   s.source           = { :git => 'https://github.com/ximximik/DPTableView.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '10.0'
 
   s.source_files = 'DPTableView/Classes/**/*'
 
   s.frameworks = 'UIKit'
-  s.dependency 'RxSwift', '4.3.0'
-  s.dependency 'RxCocoa', '4.3.0'
+  s.dependency 'RxSwift', '5.0'
+  s.dependency 'RxCocoa', '5.0'
   s.dependency 'DZNEmptyDataSet', '~> 1.8.1'
-  s.dependency 'RxDataSources', '3.1.0'
+  s.dependency 'RxDataSources', '4.0.1'
 end
